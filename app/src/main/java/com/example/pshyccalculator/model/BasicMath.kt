@@ -41,8 +41,8 @@ class BasicMath{
          */
         @Throws(ZeroDivisionException::class)
         @JvmStatic fun divisionOf(num1: Double, num2: Double): Double {
-            if (num2 == 0.0) throw ZeroDivisionException("Can't divide by Zero")
-            return num1 / num2
+            if (num2 == 0.0) throw ZeroDivisionException("Can't divide by Zero");
+            return num1 / num2;
         }
 
         /*
@@ -55,8 +55,8 @@ class BasicMath{
          */
         @Throws(ZeroDivisionException::class)
         @JvmStatic fun remainderOf(num1: Double, num2: Double): Double {
-            if (num2 == 0.0) throw ZeroDivisionException("Can't divide by Zero")
-            return num1 % num2
+            if (num2 == 0.0) throw ZeroDivisionException("Can't divide by Zero");
+            return num1 % num2;
         }
     }
 }

@@ -17,29 +17,29 @@ class ExpressionOp{
     */
     @Throws(Exception::class)
     private fun doThisOperation(operation: String, number1: String, number2: String): String {
-        var result = ""
+        var result = "";
         when (operation) {
             "+" -> {
-                result = "" + BasicMath.addThis(number1.toDouble(), number2.toDouble())
+                result = "" + BasicMath.addThis(number1.toDouble(), number2.toDouble());
             }
 
             "-" -> {
-                result = "" + BasicMath.subtract(number1.toDouble(), number2.toDouble())
+                result = "" + BasicMath.subtract(number1.toDouble(), number2.toDouble());
             }
 
             "*" -> {
-                result = "" + BasicMath.multiplyThis(number1.toDouble(), number2.toDouble())
+                result = "" + BasicMath.multiplyThis(number1.toDouble(), number2.toDouble());
             }
 
             "/" -> {
-                result = "" + BasicMath.divisionOf(number1.toDouble(), number2.toDouble())
+                result = "" + BasicMath.divisionOf(number1.toDouble(), number2.toDouble());
             }
 
             "%" -> {
-                result = "" + BasicMath.remainderOf(number1.toDouble(), number2.toDouble())
+                result = "" + BasicMath.remainderOf(number1.toDouble(), number2.toDouble());
             }
         }
-        return result
+        return result;
     }
 
 
@@ -54,9 +54,9 @@ class ExpressionOp{
      */
     @Throws(Exception::class)
     private fun solveSimple(col: ArrayList<String>): ArrayList<String> {
-        var priority = 0
-        var opIndex = 0
-        if (col.size == 1) return col
+        var priority = 0;
+        var opIndex = 0;
+        if (col.size == 1) return col;
         for (index in col.indices) {
 
             // checking whether it is operator
@@ -67,20 +67,20 @@ class ExpressionOp{
             //          pass
             if (operators.contains(col[index][0]) && col[index].length == 1) {
                 if (operators.indexOf(col[index][0]) + 1 > priority) {
-                    priority = operators.indexOf(col[index][0]) + 1
-                    opIndex = index
+                    priority = operators.indexOf(col[index][0]) + 1;
+                    opIndex = index;
                 }
             }
         }
 
         //  do operation for high priority operator
         // replace with resultant
-        val result = doThisOperation(col[opIndex], col[opIndex - 1], col[opIndex + 1])
-        col.removeAt(opIndex - 1)
-        col.removeAt(opIndex - 1)
-        col.removeAt(opIndex - 1)
-        col.add(opIndex - 1, result)
-        return solveSimple(col)
+        val result = doThisOperation(col[opIndex], col[opIndex - 1], col[opIndex + 1]);
+        col.removeAt(opIndex - 1);
+        col.removeAt(opIndex - 1);
+        col.removeAt(opIndex - 1);
+        col.add(opIndex - 1, result);
+        return solveSimple(col);
     }
 
 
@@ -100,22 +100,22 @@ class ExpressionOp{
      * finally  ==> returns ArrayList<String>
      */
     private fun splitSimple(expression: String): java.util.ArrayList<String> {
-        val col = java.util.ArrayList<String>()
-        var operatorCount = 0
-        var expressionElement = ""
+        val col = java.util.ArrayList<String>();
+        var operatorCount = 0;
+        var expressionElement = "";
         for ((index, character) in expression.toCharArray().withIndex()) {
             if (operators.contains(character) && operatorCount == 0 && index != 0) {
-                col.add(expressionElement)
-                expressionElement = ""
-                col.add(character.toString() + "")
-                operatorCount++
+                col.add(expressionElement);
+                expressionElement = "";
+                col.add(character.toString() + "");
+                operatorCount++;
             } else {
-                if (operatorCount > 0) operatorCount--
-                expressionElement += character
+                if (operatorCount > 0) operatorCount--;
+                expressionElement += character;
             }
         }
-        col.add(expressionElement)
-        return col
+        col.add(expressionElement);
+        return col;
     }
 
 
@@ -124,9 +124,9 @@ class ExpressionOp{
      */
     private fun isParenthesisAvailable(expression: String): Boolean {
         for (character in expression.toCharArray()) {
-            if (character == '(') return true
+            if (character == '(') return true;
         }
-        return false
+        return false;
     }
 
 
@@ -149,53 +149,53 @@ class ExpressionOp{
      */
     @Throws(Exception::class)
     private fun solveParenthesis(expression: String): String {
-        var result = ""
-        var temp = ""
-        var parenthesis = 0
-        val col = java.util.ArrayList<String>()
+        var result = "";
+        var temp = "";
+        var parenthesis = 0;
+        val col = java.util.ArrayList<String>();
         for (character in expression.toCharArray()) {
             if (parenthesis > 0) {
                 if (character == '(') {
-                    temp += character
-                    parenthesis++
+                    temp += character;
+                    parenthesis++;
                 } else if (character == ')' && parenthesis == 1) {
-                    temp += character
-                    col.add(temp)
-                    temp = ""
-                    parenthesis--
+                    temp += character;
+                    col.add(temp);
+                    temp = "";
+                    parenthesis--;
                 } else if (character == ')') {
-                    temp += character
-                    parenthesis--
+                    temp += character;
+                    parenthesis--;
                 } else {
-                    temp += character
+                    temp += character;
                 }
             } else if (character == '(' && temp !== "") {
-                col.add(temp)
-                temp = "" + character
-                parenthesis++
+                col.add(temp);
+                temp = "" + character;
+                parenthesis++;
             } else if (character == '(') {
-                temp += character
-                parenthesis++
+                temp += character;
+                parenthesis++;
             } else {
-                temp += character
+                temp += character;
             }
         }
         // if temp not empty append to arrayList
         if (temp !== "") col.add(temp)
         for (index in col.indices) {
             if (col[index].startsWith("(")) {
-                temp = col[index]
-                col[index] = solveParenthesis(temp.substring(1, temp.length - 1))
+                temp = col[index];
+                col[index] = solveParenthesis(temp.substring(1, temp.length - 1));
             }
         }
 
         for (ele in col) {
 
             result += if (ele[0] in '0'..'9' && ele[ele.length - 1] >= '0' && ele[0] <= '9') {
-                solveSimple(splitSimple(ele))[0]
-            } else ele
+                solveSimple(splitSimple(ele))[0];
+            } else ele;
         }
-        return result
+        return result;
     }
 
 
@@ -212,13 +212,13 @@ class ExpressionOp{
      */
     @Throws(Exception::class)
     private fun getAnswerOf(expression: String): Double {
-        var expression = expression
+        var expression = expression;
         var result:Double = 0.0;
         if (isParenthesisAvailable(expression)) {
-            expression = solveParenthesis(expression)
+            expression = solveParenthesis(expression);
         }
-        result = solveSimple(splitSimple(expression))[0].toDouble()
-        return result
+        result = solveSimple(splitSimple(expression))[0].toDouble();
+        return result;
     }
 
     /*
@@ -236,7 +236,7 @@ class ExpressionOp{
         var expressionArray: CharArray = expression.toCharArray();
         var len = expressionArray.size-2;
         for(index in 0..len){
-            if(expressionArray[index+1] == '(' && !operators.contains(expressionArray[index]) && expressionArray[index] !in '0'..'9'){
+            if(expressionArray[index+1] == '(' && !operators.contains(expressionArray[index])){
                 return updateExpressionIfRequired(expression.substring(0,index+1) + "*" + expression.substring(index+1,expression.length));
             }
         }

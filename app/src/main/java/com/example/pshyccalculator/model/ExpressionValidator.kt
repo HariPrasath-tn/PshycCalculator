@@ -40,13 +40,13 @@ class ExpressionValidator {
             if (newArr[index] == '(' && newArr[index+1] == ')')
                 return false;
             else if (newArr[index] == '(')
-                parenthesis++
+                parenthesis++;
             else if (newArr[index] == ')' && parenthesis == 0)
-                return false
+                return false;
             else if (newArr[index] == ')')
-                parenthesis--
+                parenthesis--;
         }
-        return parenthesis == 0
+        return parenthesis == 0;
     }
 
 
@@ -62,25 +62,25 @@ class ExpressionValidator {
      *      else        ==> returns true
      */
     private fun isOperatorOk(expression: String): Boolean {
-        var symbolCount = 0
-        var symbol = ' '
+        var symbolCount = 0;
+        var symbol = ' ';
         var expressionArray = expression.toCharArray();
         if (operators.contains(expressionArray[expressionArray.size-1]))
             return false;
         for (letter in expressionArray) {
             if (symbol != ' ' && operators.contains(letter) || symbolCount > 1) {
-                return false
+                return false;
             } else if (letter == ' ') {
                 // ignored
             } else if (operators.contains(letter)) {
-                symbol = letter
-                symbolCount++
+                symbol = letter;
+                symbolCount++;
             } else {
-                symbolCount = 0
-                symbol = ' '
+                symbolCount = 0;
+                symbol = ' ';
             }
         }
-        return true
+        return true;
     }
 
 
@@ -99,7 +99,7 @@ class ExpressionValidator {
         var dotCount =0;
         for(ele in expression.toCharArray()){
             if(ele == '.' && dotCount>0)
-                return false
+                return false;
             else if(ele == '.')
                 dotCount++;
             else if(ele=='(' || ele==')' || operators.contains(ele))
@@ -118,6 +118,6 @@ class ExpressionValidator {
      *
      */
     fun isValidExpression(expression: String): Boolean {
-        return isParenthesisOk(expression) && isOperatorOk(expression) && isDotOk(expression)
+        return isParenthesisOk(expression) && isOperatorOk(expression) && isDotOk(expression);
     }
 }

@@ -35,7 +35,9 @@ class MainModelRepository {
              * else if operationType == clear:
              *      assign expression =0
              * else:
-             *      if expression is 0 and operator is one among (*, /, %):
+             *      if unary minus:
+             *          append minus
+             *      else if expression is 0 and operator is one among (*, /, %):
              *          expression = 1 + operatorType
              *      else if expression is 0 and operator is one among (+, -):
              *          expression = 0 + operator
@@ -55,22 +57,23 @@ class MainModelRepository {
                 ("clear") -> "0";
 
                 else  -> {
-
-                    if(opType in listOf<String>("*", "/", "%")  && tempExpression == "") {
+                    if(opType == "-" && tempExpression==""){
+                        "-"
+                    } else if(opType in listOf<String>("*", "/", "%")  && tempExpression == "") {
                         if(History.getInstance().result != "0") {
                             History.getInstance().result + opType
                         }else{
-                            "1$opType"
+                            "1$opType";
                         }
                     }else if (opType in listOf<String>("+", "-")  && tempExpression == ""){
                         if(History.getInstance().result != "0") {
-                            History.getInstance().result + opType
+                            History.getInstance().result + opType;
                         }else{
-                            "0$opType"
+                            "0$opType";
                         }
                     }else if (operators.contains(opType) && operators.contains(tempExpression.substring(tempExpression.length-1, tempExpression.length-0))){
                         // TODO need to update for 0 multiplication and division
-                        tempExpression.substring(0, tempExpression.length-1) + opType
+                        tempExpression.substring(0, tempExpression.length-1) + opType;
                     }else{
                         tempExpression+opType;
                     }
@@ -96,7 +99,7 @@ class MainModelRepository {
                 History.getInstance().result = if(result%1 > 0){
                     result.toString()
                 }else{
-                    result.toInt().toString()
+                    String.format("%.0f", result)
                 };
                 textOperations("clear");
                 return true;

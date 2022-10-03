@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding;
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState);
 
         // initializing the data binding for the activity main
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
